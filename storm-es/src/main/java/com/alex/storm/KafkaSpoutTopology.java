@@ -51,7 +51,7 @@ public class KafkaSpoutTopology {
         // elasticsearch 写入
         Map<String, Object> additionalParameters = new HashMap<>();
         additionalParameters.put("client.transport.sniff", "true");
-        additionalParameters.put(ConfigurationOptions.ES_NODES, "192.168.33.151");
+        additionalParameters.put(ConfigurationOptions.ES_NODES, "192.168.34.56");
         additionalParameters.put(ConfigurationOptions.ES_BATCH_FLUSH_MANUAL_DEFAULT, true);
 //        EsConfig esConfig = new EsConfig("my-application", new String[]{"192.168.34.56:9300"});
 //        EsTupleMapper tupleMapper = new DefaultEsTupleMapper();
