@@ -22,3 +22,5 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 storm-es/.idea/*
+kafka_test0822/.idea/*
+kafka_test0822/kafka_test0822.iml

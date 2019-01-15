@@ -29,6 +29,7 @@ import static org.elasticsearch.storm.cfg.StormConfigurationOptions.ES_STORM_BOL
 public class EsIndexBolt implements IRichBolt {
     private transient static Log log = LogFactory.getLog(EsBolt.class);
 
+    private String prefix = "storm";
     private Map boltConfig = new LinkedHashMap();
 
     private transient RestService.PartitionWriter writer;
@@ -56,7 +57,7 @@ public class EsIndexBolt implements IRichBolt {
     private LinkedHashMap changeIndex(LinkedHashMap copy) {
         String target = copy.get(ES_RESOURCE_WRITE).toString();
         String[] targetArr = target.split("/");
-        copy.put(ES_RESOURCE_WRITE, targetArr[0].concat("_").concat(getCurrentDate()).concat("/").concat(targetArr[1]));
+        copy.put(ES_RESOURCE_WRITE, prefix.concat("_").concat(targetArr[0].concat("_").concat(getCurrentDate()).concat("/").concat(targetArr[1])));
         return copy;
     }
 

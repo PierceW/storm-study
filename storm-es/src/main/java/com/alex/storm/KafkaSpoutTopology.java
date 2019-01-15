@@ -20,7 +20,7 @@ import java.util.Map;
 
 public class KafkaSpoutTopology {
 
-    private static String bootstrapServers = "192.168.33.86:9092";
+    private static String bootstrapServers = "10.150.25.102:9092,10.150.25.100:9092,10.150.25.106:9092";
     private static String topic = "pub_visit_topic";
     private static String TOPIC_0_1_STREAM = "pub_visit_topic_stream";
     private static String ES_INSERT_STREAM = "es_insert_stream";
@@ -40,8 +40,8 @@ public class KafkaSpoutTopology {
                 new Fields("topic", "partition", "offset", "key", "value"), TOPIC_0_1_STREAM);
 
         KafkaSpoutConfig<String, String> kafkaSpoutConfig = KafkaSpoutConfig.builder(bootstrapServers, topic)
-                .setFirstPollOffsetStrategy(KafkaSpoutConfig.FirstPollOffsetStrategy.EARLIEST)
-                .setGroupId("test_kafka_spout092716")
+                .setFirstPollOffsetStrategy(KafkaSpoutConfig.FirstPollOffsetStrategy.LATEST)
+                .setGroupId("test_kafka_spout1008")
                 .setRecordTranslator(trans)
                 .build();
 
@@ -51,7 +51,7 @@ public class KafkaSpoutTopology {
         // elasticsearch 写入
         Map<String, Object> additionalParameters = new HashMap<>();
         additionalParameters.put("client.transport.sniff", "true");
-        additionalParameters.put(ConfigurationOptions.ES_NODES, "192.168.34.56");
+        additionalParameters.put(ConfigurationOptions.ES_NODES, "10.150.20.75");
         additionalParameters.put(ConfigurationOptions.ES_BATCH_FLUSH_MANUAL_DEFAULT, true);
 //        EsConfig esConfig = new EsConfig("my-application", new String[]{"192.168.34.56:9300"});
 //        EsTupleMapper tupleMapper = new DefaultEsTupleMapper();
@@ -64,6 +64,6 @@ public class KafkaSpoutTopology {
 
 
         config.setNumWorkers(2);
-        StormSubmitter.submitTopology("get_kafka", config, builder.createTopology());
+        StormSubmitter.submitTopology("transfer_storm", config, builder.createTopology());
     }
 }
